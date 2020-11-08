@@ -61,10 +61,10 @@
                                 of magnitude data in geographical space for easier differentiation of area of high and low occurrences and shed light on hidden factors.
                             </p>
                             <p>
-                                I this tutorial we will crete a webmap to visualize data using heatmap while employing chart to provide additional(attribute) information. We will be using <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a>                                to display heatmaps and <a href="https://c3js.org/">C3.js Charts Library</a> to provide additional information on heatmap we created.
+                                In this tutorial we will be creating a webmap to visualize data using heatmap while employing chart to provide additional(attribute) information. We will be using <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a>                                to display heatmaps and <a href="https://c3js.org/">C3.js Charts Library</a> to provide additional information on heatmap we created.
                             </p>
                             <p>
-                                See an example below
+                                See the final output below
                             </p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="card border-0 border-left-2 bg-transparent">
                         <div class="card-body">
                             <h3>Data Preperation</h3>
-                            I this tutorial we will be using a subset of United States Forest Fires avalable at <a class="text-decoration-none" href="https://storymaps.esri.com/stories/usa-wildfires/">Esri US Wildfires</a>. You can download a CSV file
+                            In this tutorial we will be using a subset of United States Forest Fires avalable at <a class="text-decoration-none" href="https://storymaps.esri.com/stories/usa-wildfires/">Esri US Wildfires</a>. You can download a CSV file
                             <a href="lab-project/excel/data-2.csv" download>here</a> of the data. Using QGIS import deliminated file available under add layer, and set geometry to the respective longitude and Latitudes. Then export the file to geojson
                             file format. We will use this file to load the heatmaps.
                         </div>
@@ -95,8 +95,8 @@
                         <div class="card-body">
                             <h3>Map</h3>
                             As you all know, inorder to dispay a webmap you need html document to hold your map. Also you need to include leaflet dependecies in your document. Follow the following steps to complete the preperation of our webmap skeleton.
-                            <br/><b>Note 1.</b> Its advisable to place your stylesheet in head section and script at the bottom o your document to improve loading speed.
-                            <br/><b>Note 2.</b> Save your html document as index.htm, this ensure that the web serer doesnt display file index on parent directory but your map.
+                            <br/><b>Note 1.</b> Its advisable to place your stylesheet in head section and script at the bottom of your document to improve loading speed.
+                            <br/><b>Note 2.</b> Save your html document as index.htm, this ensure that the web server doesnt display file index on parent directory but your map.
                             <h5>1. Html Document</h5>
                             In this html document we will be using hosted version of leaflet. You could find the latest version at <a class="text-decoration-none" href="https://leafletjs.com/">leaflet</a> js officail website.<br/> Open your favourite
                             text editor and paste the code below.
@@ -187,7 +187,7 @@ var baseMaps = {
                             <h3>Adding Map Title</h3>
                             <h5>1. Javascript code</h5>
                             <p>
-                                after the defining map virable lets add tile variable to hold out title div</br>
+                                After defining map virable add title variable to hold out title code.</br>
                                 <b>Note.</b> we are defining and adding the title div after instantiating a map variable
                             </p>
                             <pre>
@@ -238,7 +238,7 @@ titleDiv.addTo(map); //this adds the title to the map
                                 <li>Include L.Control.Rose.js inthe bottom section off our html file </li>
                             </ol>
                             <h5>2. Add CSS File</h5>
-                            Rember css are usually added in head section of map as they are esier to load.
+                            Remember css are usually added in head section of map as they are easier to load.
                             <pre>
 								<code class="language-html">
 &lt;!--North Arrow --&gt;
@@ -281,7 +281,7 @@ rose.addTo(map);
                         <div class="card-body">
                             <h3>Add Scale Bar</h3>
                             A scale bar is another vital element of a map. We will be using
-                            <a class="text-decoration-none" href="https://github.com/daniellsu/leaflet-betterscale">leaflet-betterscale</a>, so download it add a to our html document as described in section above(North arrow). Once you have copied your
+                            <a class="text-decoration-none" href="https://github.com/daniellsu/leaflet-betterscale">leaflet-betterscale</a> to dislay a scale bar. Download this plugin and add it to our html document as described in section above(North arrow). Once you have copied your
                             leflet better scale to your directory off choice, add to our map as shown below.
                             <h5>1. Add CSS File</h5>
                             <pre>
@@ -314,9 +314,9 @@ L.control.betterscale().addTo(map);
                     <div class="card border-0 border-left-2 bg-transparent">
                         <div class="card-body">
                             <h3>Creating Heatmaps</h3>
-                            <p>We are down to the bussiness end, In this section were are going to be developing the leflet layer of the webmap. First of all you need to download and include plugin to your map as described eralier. After that you need to
+                            <p>We are down to the business end, in this section were are going to be developing the heatmap layer of the webmap. First of all you need to download and include the plugin to your map as described earlier. After that you need to
                                 include the Leaflet.heat JavaScript File (Leflet.heat extends functionality of leaflet hence no CSS file for it) in our html document and later load a geojson file containing data to visualize</p>
-                            <p>Here we will be using jQuery load JSON($.getJSON) function to load the geojson file we had prepared.</p>
+                            <p>Here we will be using jQuery get JSON($.getJSON) function to load the geojson file we had prepared.</p>
                             <h5>1. Loading Geojson and Drawing Heatmaps</h5>
                             <pre>
 								<code class="JavaScript">
@@ -349,8 +349,8 @@ $.getJSON("data/forest_fires.geojson", function(data) {
                     <div class="card border-0 border-left-2 bg-transparent">
                         <div class="card-body">
                             <h3>Additional Functionality</h3>
-                            With leaflet heat its difficulty to add popups and tooltips ue to its minified nature, hence to provide additional functionalitie is possible to add an overlay point layer that can offers attribute information to the map. The following javascript code
-                            does it as well as utilizes c3 chart to provide graphical visualization of areas consumed by fires.
+                            With leaflet heat its difficulty to add popups and tooltips due to its minified nature, hence to provide additional functionalitie is possible to add an overlay point layer that can offers attribute information to the map. The following javascript code
+                            does it as well as utilizes c3 chart to provide graphical visualization of areas consumed by fires. <br/><b>Note: </b> Save your geojson layer as javascript file and define a varable o hold the data. (e.g var layer ={..geojson content..})
                             <pre>
 								<code class="JavaScript">
 var geojson;
