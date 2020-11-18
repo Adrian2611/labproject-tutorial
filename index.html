@@ -61,7 +61,9 @@
                                 of magnitude data in geographical space for easier differentiation of area of high and low occurrences and shed light on hidden factors.
                             </p>
                             <p>
-                                In this tutorial we will be creating a webmap to visualize data using heatmap while employing chart to provide additional(attribute) information. We will be using <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a>                                to display heatmaps and <a href="https://c3js.org/">C3.js Charts Library</a> to provide additional information on heatmap we created.
+                                In this tutorial we will be creating a webmap to visualize data using heatmap while employing chart to provide additional(attribute) information. 
+								We will be using <a href="https://github.com/Leaflet/Leaflet.heat">Leaflet.heat plugin</a>                      
+								to display heatmaps, JQuery to Load the geoJson data, and <a href="https://c3js.org/">C3.js Charts Library</a> to provide additional information on heatmap we created.
                             </p>
                             <p>
                                 See the final output below
@@ -84,7 +86,7 @@
                         <div class="card-body">
                             <h3>Data Preperation</h3>
                             In this tutorial we will be using a subset of United States Forest Fires avalable at <a class="text-decoration-none" href="https://storymaps.esri.com/stories/usa-wildfires/">Esri US Wildfires</a>. You can download a CSV file
-                            <a href="lab-project/excel/data-2.csv" download>here</a> of the data. Using QGIS import deliminated file available under add layer, and set geometry to the respective longitude and Latitudes. Then export the file to geojson
+                            <a href="lab-project/excel/data-2.csv" download>here</a> of the data. Using QGIS import deliminated file available under add layer, and set geometry to the respective longitude and latitudes. Then export the file to geojson
                             file format. We will use this file to load the heatmaps.
                         </div>
                     </div>
@@ -94,9 +96,13 @@
                     <div class="card border-0 border-left-2 bg-transparent">
                         <div class="card-body">
                             <h3>Map</h3>
-                            As you all know, inorder to dispay a webmap you need html document to hold your map. Also you need to include leaflet dependecies in your document. Follow the following steps to complete the preperation of our webmap skeleton.
+                            As you all know, in order to dispay a webmap you need html document to hold your map. Also you need to include leaflet dependecies in your document. Follow the following steps to complete the preperation of our webmap skeleton.
                             <br/><b>Note 1.</b> Its advisable to place your stylesheet in head section and script at the bottom of your document to improve loading speed.
-                            <br/><b>Note 2.</b> Save your html document as index.htm, this ensure that the web server doesnt display file index on parent directory but your map.
+                            <br/><b>Note 2.</b> Save your html document as index.html, this ensure that the web server doesnt display file index on parent directory but your map.
+							<br/><b>Note 3.</b> The map we are creating will be in full screen.
+							<br/><b>Note 4.</b> We are setting the width and height of map to fill the web browser with width height set 100% an width to viewport width.
+							
+							
                             <h5>1. Html Document</h5>
                             In this html document we will be using hosted version of leaflet. You could find the latest version at <a class="text-decoration-none" href="https://leafletjs.com/">leaflet</a> js officail website.<br/> Open your favourite
                             text editor and paste the code below.
@@ -105,6 +111,7 @@
 &lt;html&gt;
     &lt;head&gt; 
         &lt;title&gt;Lab Project - Heatmaps&lt;/title&gt; 
+		&lt;!-- Icon--&gt; 
         &lt;link rel=&quot;icon&quot; href=&quot;favicon.png&quot; &gt; 
         &lt;!-- Leaflet Css--&gt; 
         &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.css&quot; integrity=&quot;sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==&quot; crossorigin=&quot;&quot;/&gt;
@@ -112,15 +119,22 @@
         &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt; 
         &lt;!-- Style --&gt; 
         &lt;style&gt; 
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #mymap {
+			height: 100%;
+			width: 100vw;
+		}
         &lt;/style&gt; 
     &lt;/head&gt; 
     &lt;body&gt; 
         &lt;!-- Java Scripts--&gt; 
-        &lt;!--Boostrap --&gt;
-        &lt;script src=&quot;plugins/boostrap/js/bootstrap.min.js&quot;&gt;
         &lt;--script&gt;--&gt; 
         &lt;!-- Load d3.js and c3.js --&gt;
         &lt;script src=&quot;https://d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
+		&lt;!-- Jquery --&gt;
         &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js&quot;&gt;&lt;/script&gt;
         &lt;!-- Leaflet js--&gt;
         &lt;script src=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.js&quot; integrity=&quot;sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==&quot; crossorigin=&quot;&quot;&gt;&lt;/script&gt;
@@ -129,7 +143,8 @@
 							</code></pre>
                             <h5>2. Add map div</h5>
                             <p>
-                                Before the scripts add ad div and give it an id of map.
+                                Before the scripts add div and give it an id of map.
+								<br/><b>Note 1.</b> We have not set the height and width of the div, this means that the div's height and width is inherited from the body.
                             </p>
 
                             <pre>
@@ -139,8 +154,10 @@
 							</pre>
                             <h5>3. Add Tile Providers, Layer Control, and Map</h5>
                             <p>
-                                lets add three tile providers by defining them using let or var keyword, add map variable, and layer control in inside script tags
-                            </p>
+                                Lets add three tile providers by defining them using let or var keyword, add map variable, and layer control in inside script tags
+								<br/><b>Note 1.</b> In javasript variables can be define in either camel case (i.e var camelCase = ...) or using underscore (i.e var camel_case = ...) to seperate words.
+								<br/><b>Note 2.</b> It is important to visit the tile providers site in order to findout on how they want their attribution stated.
+						   </p>
                             <pre>
 								<code class="JavaScript">
 
@@ -204,9 +221,9 @@ titleDiv.addTo(map); //this adds the title to the map
 							</pre>
                             <h5>2. Styling - Cascading Style Sheet(css)</h5>
                             <p>
-                                Now that we have added the title div its important to syle our div to our liking. Add the code below inside the style tags inside the head tags. You could create a cascading style sheet (css) and add your style there. this ensure you have a easier syntax
-                                highlighting based on css
-                            </p>
+                                Now that we have added the title div its important to syle our div to our liking. Add the code below inside the style tags inside the head tags. You could create a cascading style sheet (css) and add your style there.
+								In this tutorial we will be using the style tags to style our html document.
+							</p>
                             <pre>
 								<code class="language-css">
 //uses class titleDiv
@@ -242,7 +259,7 @@ titleDiv.addTo(map); //this adds the title to the map
                             <pre>
 								<code class="language-html">
 &lt;!--North Arrow --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;plugins/north-arrow/L.Control.Rose.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;plugins/north-arrow/L.Control.Rose.css&quot; &gt;
 								</code>
 							</pre>
 
@@ -350,7 +367,9 @@ $.getJSON("data/forest_fires.geojson", function(data) {
                         <div class="card-body">
                             <h3>Additional Functionality</h3>
                             With leaflet heat its difficulty to add popups and tooltips due to its minified nature, hence to provide additional functionalitie is possible to add an overlay point layer that can offers attribute information to the map. The following javascript code
-                            does it as well as utilizes c3 chart to provide graphical visualization of areas consumed by fires. <br/><b>Note: </b> Save your geojson layer as javascript file and define a varable o hold the data. (e.g var layer ={..geojson content..})
+                            does it as well as utilizes c3 chart to provide graphical visualization of areas consumed by fires. 
+							<br/><b>Note 1: </b> Save your geojson layer as javascript file and define a varable o hold the data. (e.g var layer ={..geojson content..})
+							<br/><b>Note 2: </b> Have a peek at C3js charts library to better understand this section
                             <pre>
 								<code class="JavaScript">
 var geojson;
@@ -598,6 +617,20 @@ searchController.on('search:locationfound', function(event) {
 								</code>
 							</pre>
                         </div>
+                    </div>
+                </section>
+				
+				<hr class="border-success" />
+                <section id="search" class="mt-3">
+                    <div class="card border-0 border-left-2 bg-transparent">
+                        <div class="card-body">
+							<h3>Deliverables</h3>
+							<p>
+								Using  any earthquake data of your choice create a heatmap, you do not have to include the additional functionality section.</br>
+								Incase you are wondering where you could get such data, here is a sample link 
+								<a href="https://earthquake.usgs.gov/earthquakes/map/?extent=13.66734,-133.06641&extent=56.84897,-56.86523">USGS Latest Earthquakes</a>. 
+							</p>
+						</div>
                     </div>
                 </section>
 
