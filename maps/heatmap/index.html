@@ -90,9 +90,6 @@
 				"OSM Mapnik": OpenStreetMap_Mapnik
 			};
 			
-			L.control.layers(baseMaps).addTo(map);
-			
-			
 			//Map tile									
 			var titleDiv = L.control({position: 'topright'}); //position 'topright' a leaflet class used to position iems inside map div
 			titleDiv.onAdd = function (map){
@@ -102,6 +99,7 @@
 				console.log("title");
 			};
 			titleDiv.addTo(map); //this adds the title to the map
+			L.control.layers(baseMaps).addTo(map);
 			//add better scale plugin to map
 			L.control.betterscale().addTo(map);
 			//rose north arrow
