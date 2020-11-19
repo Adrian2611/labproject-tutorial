@@ -88,8 +88,8 @@
 			//Map tile									
 			var titleDiv = L.control({position: 'topright'}); //position 'topright' a leaflet class used to position iems inside map div
 			titleDiv.onAdd = function (map){
-				var titleText = L.DomUtil.create('div', 'titleDiv'); //here we define html tag 'div', and give it a class named 'titleDiv'
-				titleText.innerHTML = '<h6>Lab Project : USA Wild Fires</h6><br><span class="small text-muted">September and October 2020</span>'; //here we are adding elements in the title div
+				var titleText = document.createElement('div'); //here we define html tag 'div', and give it a class named 'titleDiv'
+				titleText.innerHTML = '<div style="box-shadow: 0 1px 5px rgba(0,0,0,0.4); background: #fff; border-radius: 6px; padding: 6px; line-height:2;">Lab Project : USA Wild Fires<br/><span class="small text-muted">September and October 2020</span></div>'; //here we are adding elements in the title div
 				return titleText;
 				console.log("title");
 			};
