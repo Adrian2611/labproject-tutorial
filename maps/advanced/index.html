@@ -82,7 +82,7 @@
 				"OSM Mapnik": OpenStreetMap_Mapnik
 			};
 			
-			L.control.layers(baseMaps).addTo(map);
+			
 			
 			
 			//Map tile									
@@ -94,6 +94,7 @@
 				console.log("title");
 			};
 			titleDiv.addTo(map); //this adds the title to the map
+			L.control.layers(baseMaps).addTo(map);
 			//add better scale plugin to map
 			L.control.betterscale().addTo(map);
 			//rose north arrow
