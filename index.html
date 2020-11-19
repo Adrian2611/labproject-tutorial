@@ -261,7 +261,7 @@ titleDiv.addTo(map); //this adds the title to the map
                             <h5>1. Download the Plugin</h5>
                             from the above link use the clone button to download the plugin an include it to our html document as described below.
                             <ol>
-                                <li>Extract and save the files inside the dist folder in your preferred folder at the root of your project. For mycase it in 'plugins/north-arrow/'</li>
+                                <li>Extract and save the files inside the dist folder in your preferred folder at the root of your project. For mycase it in 'plugins/north-arrow/' - (Is advisable to use the one in the dist folder for less huslte when getting the north arrow)</li>
                                 <li>Include L.Control.Rose.css in head section using link tag and stlesheet as text format </li>
                                 <li>Include L.Control.Rose.js inthe bottom section off our html file </li>
                             </ol>
@@ -300,6 +300,20 @@ rose.addTo(map);
 &lt;div id=&quot;rose&quot;&gt;&lt;/div&gt;
 								</code>
 							</pre>
+							
+							<h5>6. Edit L.Control.Rose.js</h5>
+                            <p>
+                                Edit Line 44 (var path = 'arrows/'+arrow+'.svg';) to reflect path to arrows directory.
+                            </p>
+                            <pre>
+								<code class="JavaScript">
+//change 
+var path = 'arrows/'+arrow+'.svg';
+//to
+var path = 'plugins/north-arrow/arrows/'+arrow+'.svg';
+//this should reflect the folder you are storing your svg file
+								</code>
+							</pre>
                         </div>
                     </div>
                 </section>
@@ -327,7 +341,7 @@ rose.addTo(map);
 								</code>
 							</pre>
                             <h5>3. Add Javascript</h5>
-                            Add the following javascript code after the rose varable to add the scale bar.
+                            Add the following javascript code before the rose varable to add the scale bar. This will draw scale bar before the north arrow
                             <pre>
 								<code class="JavaScript">
 //add better scale plugin to map
