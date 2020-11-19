@@ -123,7 +123,7 @@
 			padding: 0;
 			margin: 0;
 		}
-		html, body, #mymap {
+		html, body, #map {
 			height: 100%;
 			width: 100vw;
 		}
@@ -181,7 +181,7 @@ var cartodb = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/li
 });
 
 //map
-var map = L.map('mymap',  {
+var map = L.map('map',  {
 	center: [39.2880922,-100.7323497],//sets map center
 	zoom: 4,//set zoom level
 	layers: [Jawg_Matrix],//heatmapLayer/add to map
